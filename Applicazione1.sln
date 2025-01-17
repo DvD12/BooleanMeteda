@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassiAstratte", "ClassiAst
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Poligoni", "Poligoni\Poligoni.csproj", "{27363C2F-6142-4AE2-9808-51469B7AEA7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Eccezioni", "Eccezioni\Eccezioni.csproj", "{2B683BE3-ED69-4BBD-B334-274581980466}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M009-GestioneFile", "M009-GestioneFile\M009-GestioneFile.csproj", "{B672CA40-5F12-4BED-B0C3-ECFA5D3A989F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +67,14 @@ Global
 		{27363C2F-6142-4AE2-9808-51469B7AEA7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27363C2F-6142-4AE2-9808-51469B7AEA7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27363C2F-6142-4AE2-9808-51469B7AEA7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B683BE3-ED69-4BBD-B334-274581980466}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B683BE3-ED69-4BBD-B334-274581980466}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B683BE3-ED69-4BBD-B334-274581980466}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B683BE3-ED69-4BBD-B334-274581980466}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B672CA40-5F12-4BED-B0C3-ECFA5D3A989F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B672CA40-5F12-4BED-B0C3-ECFA5D3A989F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B672CA40-5F12-4BED-B0C3-ECFA5D3A989F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B672CA40-5F12-4BED-B0C3-ECFA5D3A989F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

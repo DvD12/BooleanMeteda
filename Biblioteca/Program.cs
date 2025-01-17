@@ -1,4 +1,6 @@
-﻿namespace Biblioteca
+﻿using System.Data.SqlTypes;
+
+namespace Biblioteca
 {
 	internal class Program
 	{
@@ -19,12 +21,10 @@
 
 			Func<Documento, bool> criterioPerCodiceL001 = (doc) =>
 			{
-				return doc.Codice == "L001";
+				return doc.Codice == "L00112341";
 			};
 			bool risposta = criterioPerCodiceL001(d);
 			bool risposta2 = criterioPerCodiceL001(d1);
-
-			Documento d12123123 = biblio.Ricerca(criterioPerCodiceL001);
 
 			Documento d1234 = biblio.Ricerca((d) =>
 			{
