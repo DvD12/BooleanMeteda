@@ -72,7 +72,7 @@
 				while (stream.EndOfStream == false)
 				{
 					Console.WriteLine($"Sono in posizione {stream.BaseStream.Position}/{stream.BaseStream.Length}");
-					string riga = stream.ReadLine();
+					string riga = stream.ReadLine(); // Legge una riga dallo stream e "incrementa" la posizione di lettura, il cursore interno di N caratteri fino a raggiungere una nuova riga
 					Console.WriteLine(riga);
 				}
 

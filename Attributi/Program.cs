@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AdoNet;
 
 namespace Attributi
 {
@@ -6,6 +7,8 @@ namespace Attributi
 	{
 		static void Main(string[] args)
 		{
+			//ClassePerIlMondoEsterno c = new ClassePerIlMondoEsterno(); // Questa classe è internal, quindi si riferisce solo al suo assembly, al suo compilato (il suo progetto), nonostante abbiamo il riferimento al suo progetto
+			//c.ProprietaPubblica = 1234;
 			Console.WriteLine("Hello, World!");
 			ClasseVecchia a = new ClasseVecchia();
 			WowChecker();
