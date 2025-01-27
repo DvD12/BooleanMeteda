@@ -4,6 +4,12 @@
     {
 		static void Main(string[] args)
 		{
+			//int numero = null; // int è tipo valore, non ammette null
+			int? numero1 = null;
+
+			string stringa = null;
+			string? stringa1 = null;
+
 			int volteStampate = 0;
 
 			void StampaNumero(int numero)
