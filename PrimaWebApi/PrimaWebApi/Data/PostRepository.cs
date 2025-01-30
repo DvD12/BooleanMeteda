@@ -6,19 +6,19 @@ namespace PrimaWebApi.Data
 	public static class PostRepository
 	{
 		private static string ConnectionString = "Data Source=localhost;Initial Catalog=BlogMeteda;Integrated Security=True;Trust Server Certificate=True";
-		public static List<Post> GetAllPosts()
+		public static async Task<List<Post>> GetAllPosts()
 		{
 			List<Post> TuttiIPost = new List<Post>();
 
 			string query = "SELECT * FROM Posts";
 			using (var connection = new SqlConnection(ConnectionString))
 			{
-				connection.Open();
+				await connection.OpenAsync();
 				using (var command = new SqlCommand(query, connection))
 				{
-					using (SqlDataReader reader = command.ExecuteReader())
+					using (SqlDataReader reader = await command.ExecuteReaderAsync())
 					{
-						while (reader.Read())
+						while (await reader.ReadAsync())
 						{
 							Post p = ReadPost(reader);
 							TuttiIPost.Add(p);
@@ -42,18 +42,18 @@ namespace PrimaWebApi.Data
 			return p;
 		}
 
-		public static Post GetPost(int id)
+		public static async Task<Post> GetPost(int id)
 		{
 			Post p = null;
 
 			string query = "SELECT * FROM Posts WHERE Id = @Id";
 			using (var connection = new SqlConnection(ConnectionString))
 			{
-				connection.Open();
+				await connection.OpenAsync();
 				using (var command = new SqlCommand(query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", id);
-					using (SqlDataReader reader = command.ExecuteReader())
+					using (SqlDataReader reader = await command.ExecuteReaderAsync())
 					{
 						if (reader.Read())
 						{

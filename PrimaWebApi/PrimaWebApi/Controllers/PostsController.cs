@@ -4,19 +4,19 @@ using PrimaWebApi.Data;
 namespace PrimaWebApi.Controllers
 {
 	[ApiController]
-	[Route("[controller]/[action]")]
+	[Route("[controller]")]
 	public class PostsController : ControllerBase
 	{
 		[HttpGet]
-		public List<Post> Get()
+		public async Task<List<Post>> Get()
 		{
-			return PostRepository.GetAllPosts();
+			return await PostRepository.GetAllPosts();
 		}
 
 		[HttpGet("{id}")]
-		public Post GetPost(int id)
+		public async Task<Post> GetPost(int id)
 		{
-			return PostRepository.GetPost(id);
+			return await PostRepository.GetPost(id);
 		}
 	}
 }
