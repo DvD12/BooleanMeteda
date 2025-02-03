@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PrimaWebApi.Data;
+using PrimaWebApi.Loggers;
 
 namespace PrimaWebApi.Controllers
 {
@@ -8,15 +9,23 @@ namespace PrimaWebApi.Controllers
 	public class PostsController : ControllerBase
 	{
 		private PostRepository PostRepository { get; set; }
+		private ICustomLogger _logger { get; set; }
+		private ICustomLogger _logger2 { get; set; }
 
-		public PostsController()
+		// Dependency injection! Qualcuno di esterno (il nostro framework ASP.NET
+		// passerà un'istanziazione concreta dell'interfaccia al costruttore di questa classe
+		public PostsController(ICustomLogger l)
 		{
 			PostRepository = new PostRepository();
+			// _logger = new CustomFileLogger(); // Non è più responsabilità diretta di questa classe!
+			_logger = l;
+			Console.WriteLine(_logger.GetHashCode());
 		}
 
 		[HttpGet]
 		public async Task<IActionResult> Get(string? title)
 		{
+			_logger.WriteLog("Richiesta GET");
 			try
 			{
 				if (title == null)

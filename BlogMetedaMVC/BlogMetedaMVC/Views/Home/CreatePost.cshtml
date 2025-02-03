@@ -1,0 +1,20 @@
+﻿@model Post
+
+<form asp-controller="Home" asp-action="CreatePost" method="post">
+    @Html.AntiForgeryToken()
+    <div class="mb-3">
+        <strong>Titolo:</strong>
+        <input asp-for="Title" class="w-100" />
+    </div>
+    <div class="mb-3">
+        <strong>Contenuto:</strong>
+        <input asp-for="Content" class="w-100" />
+    </div>
+    <div class="mb-3">
+        <strong>Autore:</strong>
+        <input asp-for="Author" class="w-100" />
+    </div>
+    <div class="text-end">
+        <input type="submit" class="btn" value="Inserisci">
+    </div>
+</form>

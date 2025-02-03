@@ -1,4 +1,6 @@
 
+using PrimaWebApi.Loggers;
+
 namespace PrimaWebApi
 {
     public class Program
@@ -13,7 +15,8 @@ namespace PrimaWebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddSingleton<ICustomLogger, CustomFileLogger>();
+            Console.WriteLine(builder.Configuration["MioDato"]); // Configuration mi permette di accedere alle proprietà di appsettings.json tramite una struttura tipo dizionario
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

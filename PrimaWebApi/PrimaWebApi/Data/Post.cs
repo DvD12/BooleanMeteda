@@ -17,4 +17,54 @@ namespace PrimaWebApi.Data
 		/// </summary>
 		public string? Author { get; set; } 
 	}
+	/*
+	public class A
+	{
+		// A ha un attributo (campo) di tipo B
+		private B b;
+		// il costruttore di A istanzia B
+		public A()
+		{
+			b = new B();
+		}
+
+		// A usa un metodo di B per eseguire un task
+		public void Compito()
+		{
+			b.Method(); // serve b!
+		}
+	}
+	
+	*/
+	public class B
+	{
+		public void Method()
+		{
+			// fa qualcosa
+		}
+	}
+	public class Factory
+	{
+		// Crea un oggetto di tipo B
+		public static B GetObjectOfB()
+		{
+			return new B();
+		}
+	}
+	public class A
+	{
+		// A ha un attributo (campo) di tipo B
+		private B b;
+
+		public A()
+		{
+			//b = new B();
+			b = Factory.GetObjectOfB();
+		}
+
+		public void Compito()
+		{
+			b.Method();
+		}
+	}
 }
