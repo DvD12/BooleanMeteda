@@ -10,7 +10,9 @@ namespace PrimaWebApi.Data
 		{
 			List<Post> TuttiIPost = new List<Post>();
 
-			string query = "SELECT * FROM Posts";
+			string query = @"SELECT p.*, c.Id AS CategoryId, c.Name AS CategoryName
+							 FROM Posts p
+							 LEFT JOIN Categories c ON p.CategoryId = c.Id";
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				await connection.OpenAsync();
@@ -34,12 +36,29 @@ namespace PrimaWebApi.Data
 
 		public Post ReadPost(SqlDataReader r)
 		{
-			Post p = new();
-			p.Id = r.GetInt32(r.GetOrdinal("Id"));
-			//p.Title = r.GetString(r.GetOrdinal("Title"));
-			p.Content = r.GetString(r.GetOrdinal("Content"));
-			p.Author = r.GetString(r.GetOrdinal("Author"));
-			return p;
+			try
+			{
+				Post p = new();
+				p.Id = r.GetInt32(r.GetOrdinal("Id"));
+				//p.Title = r.GetString(r.GetOrdinal("Title"));
+				p.Content = r.GetString(r.GetOrdinal("Content"));
+				p.Author = r.GetString(r.GetOrdinal("Author"));
+				if (r.IsDBNull(r.GetOrdinal("CategoryId")) == false)
+				{
+					int categoryId = r.GetInt32(r.GetOrdinal("CategoryId"));
+					string categoryName = r.GetString(r.GetOrdinal("CategoryName"));
+					Category c = new Category();
+					c.Id = categoryId;
+					c.Name = categoryName;
+					p.CategoryId = c.Id;
+					p.Category = c;
+				}
+				return p;
+			}
+			catch (Exception e)
+			{
+				return null;
+			}
 		}
 
 		public async Task<Post> GetPost(int id)
@@ -90,16 +109,22 @@ namespace PrimaWebApi.Data
 
 		public async Task<int> CreatePost(Post p)
 		{
-			string query = "INSERT INTO Posts (Title, Content, Author) VALUES (@Title, @Content, @Author)";
+			string query = "INSERT INTO Posts (Title, Content, Author, CategoryId) VALUES (@Title, @Content, @Author, @CategoryId)";
 			using (var connection = new SqlConnection(ConnectionString))
 			{
 				await connection.OpenAsync();
 				using (var command = new SqlCommand(query, connection))
 				{
+					string pluto = "";
+
+					object pippo = pluto ?? "asd";
+
 					command.Parameters.AddWithValue("@Title", p.Title);
 					command.Parameters.AddWithValue("@Content", p.Content);
 					command.Parameters.AddWithValue("@Author", p.Author ?? ""); // ?? è un operatore di null-coalescing: se il valore alla sinistra è null, restituisce il valore alla destra; altrimenti restituisce il valore alla sinistra
+					command.Parameters.AddWithValue("@CategoryId", p.CategoryId ?? (object)DBNull.Value);
 					return await command.ExecuteNonQueryAsync();
+
 				}
 			}
 		}
@@ -148,6 +173,20 @@ namespace PrimaWebApi.Data
 				using (var command = new SqlCommand(query, connection))
 				{
 					command.Parameters.AddWithValue("@Id", id);
+					return await command.ExecuteNonQueryAsync();
+				}
+			}
+		}
+
+		public async Task<int> OnCategoryDelete(int categoryId)
+		{
+			string query = "UPDATE Posts SET CategoryId = NULL WHERE CategoryId = @CategoryId";
+			using (var connection = new SqlConnection(ConnectionString))
+			{
+				await connection.OpenAsync();
+				using (var command = new SqlCommand(query, connection))
+				{
+					command.Parameters.AddWithValue("@CategoryId", categoryId);
 					return await command.ExecuteNonQueryAsync();
 				}
 			}

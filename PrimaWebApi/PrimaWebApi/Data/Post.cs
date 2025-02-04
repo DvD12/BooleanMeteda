@@ -16,6 +16,10 @@ namespace PrimaWebApi.Data
 		/// nel modello Post farà sì che non venga contato come errore l'eventuale mancanza della proprietà 'Author' nella stringa JSON
 		/// </summary>
 		public string? Author { get; set; } 
+
+		// Chiave esterna (può essere NULL)
+		public int? CategoryId { get; set; }
+		public Category? Category { get; set; }
 	}
 	/*
 	public class A

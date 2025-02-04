@@ -1,4 +1,5 @@
 
+using PrimaWebApi.Data;
 using PrimaWebApi.Loggers;
 
 namespace PrimaWebApi
@@ -16,6 +17,8 @@ namespace PrimaWebApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddSingleton<ICustomLogger, CustomFileLogger>();
+            builder.Services.AddSingleton<PostRepository>();
+            builder.Services.AddSingleton<CategoryRepository>();
             Console.WriteLine(builder.Configuration["MioDato"]); // Configuration mi permette di accedere alle proprietà di appsettings.json tramite una struttura tipo dizionario
             var app = builder.Build();
 

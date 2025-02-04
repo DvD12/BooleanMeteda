@@ -10,13 +10,12 @@ namespace PrimaWebApi.Controllers
 	{
 		private PostRepository PostRepository { get; set; }
 		private ICustomLogger _logger { get; set; }
-		private ICustomLogger _logger2 { get; set; }
 
 		// Dependency injection! Qualcuno di esterno (il nostro framework ASP.NET
 		// passerà un'istanziazione concreta dell'interfaccia al costruttore di questa classe
-		public PostsController(ICustomLogger l)
+		public PostsController(PostRepository p, ICustomLogger l)
 		{
-			PostRepository = new PostRepository();
+			PostRepository = p; // dependency injection: "p" viene passata al costruttore dal nostro framework)
 			// _logger = new CustomFileLogger(); // Non è più responsabilità diretta di questa classe!
 			_logger = l;
 			Console.WriteLine(_logger.GetHashCode());
