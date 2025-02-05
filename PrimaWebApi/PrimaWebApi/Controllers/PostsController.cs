@@ -29,6 +29,10 @@ namespace PrimaWebApi.Controllers
 			{
 				if (title == null)
 				{
+					// Se volessi ritornare un sottoinsieme delle mie colonne/proprietà della mia tabella/classe Post, posso mappare ogni Post della
+					// mia lista in un tipo di dato anonimo che contiene solo le proprietà che voglio io
+					//return Ok((await PostRepository.GetAllPosts()).Select(x => new { x.Title, x.Author }));
+					
 					return Ok(await PostRepository.GetAllPosts());
 				}
 				else

@@ -20,6 +20,9 @@ namespace PrimaWebApi.Data
 		// Chiave esterna (può essere NULL)
 		public int? CategoryId { get; set; }
 		public Category? Category { get; set; }
+
+		public List<int> TagIds { get; set; } = new List<int>();
+		public List<Tag> Tags { get; set; } = new List<Tag>();
 	}
 	/*
 	public class A
