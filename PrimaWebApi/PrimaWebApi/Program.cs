@@ -1,6 +1,12 @@
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using PrimaWebApi.Code;
 using PrimaWebApi.Data;
 using PrimaWebApi.Loggers;
+using PrimaWebApi.Services;
+using System.Text;
 
 namespace PrimaWebApi
 {
@@ -19,7 +25,31 @@ namespace PrimaWebApi
             builder.Services.AddSingleton<ICustomLogger, CustomFileLogger>();
             builder.Services.AddSingleton<PostRepository>();
             builder.Services.AddSingleton<CategoryRepository>();
-            Console.WriteLine(builder.Configuration["MioDato"]); // Configuration mi permette di accedere alle proprietà di appsettings.json tramite una struttura tipo dizionario
+
+			builder.Services.AddAuthentication(x =>
+			{
+				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			}).AddJwtBearer(x =>
+              {
+	              x.RequireHttpsMetadata = false;
+	              x.SaveToken = true;
+	              x.TokenValidationParameters = new TokenValidationParameters
+	              {
+		              ValidateIssuerSigningKey = true,
+		              IssuerSigningKey = new SymmetricSecurityKey(
+					            Encoding.ASCII.GetBytes(
+					              builder.Configuration.GetSection("JwtSettings")
+										               .Get<JwtSettings>().Key)),
+		              ValidateIssuer = false,
+		              ValidateAudience = false
+	              };
+              });
+			builder.Services.AddScoped<IPasswordHasher<UserModel>, PasswordHasher<UserModel>>();
+			builder.Services.AddScoped<JwtAuthenticationService>();
+			builder.Services.AddScoped<UserService>();
+
+			Console.WriteLine(builder.Configuration["MioDato"]); // Configuration mi permette di accedere alle proprietà di appsettings.json tramite una struttura tipo dizionario
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -30,8 +60,8 @@ namespace PrimaWebApi
             }
 
             app.UseHttpsRedirection();
-
-            app.UseAuthorization();
+			app.UseAuthentication(); // Serve a JWT
+			app.UseAuthorization();
 
 
             app.MapControllers();

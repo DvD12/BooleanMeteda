@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PrimaWebApi.Data;
 using PrimaWebApi.Loggers;
 
@@ -73,6 +74,7 @@ namespace PrimaWebApi.Controllers
 		/// <param name="newPost">Il nuovo post da creare</param>
 		/// <returns>IActionResult avente al suo interno il numero di righe DB coinvolte</returns>
 		[HttpPost]
+		[Authorize]
 		public async Task<IActionResult> Create([FromBody] Post newPost)
 		{
 			try
