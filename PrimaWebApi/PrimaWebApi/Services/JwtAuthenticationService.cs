@@ -31,14 +31,23 @@ namespace PrimaWebApi.Services
 			}
 
 			// Se sì, allora generiamo il token JWT
+			List<Claim> claims = new List<Claim>
+			{
+				new Claim(ClaimTypes.Name, email)
+			};
+
+			// Aggiungiamo eventuali ruoli
+			var roles = await _userService.GetUserRolesAsync(user.Id);
+			foreach (string role in roles)
+			{
+				claims.Add(new Claim(ClaimTypes.Role, role));
+			}
+
 			var tokenHandler = new JwtSecurityTokenHandler();
 			var tokenKey = Encoding.ASCII.GetBytes(Settings.Key);
 			var tokenDescriptor = new SecurityTokenDescriptor
 			{
-				Subject = new ClaimsIdentity(new Claim[]
-			    { 
-					new Claim(ClaimTypes.Name, email)
-				}),
+				Subject = new ClaimsIdentity(claims),
 				Expires = DateTime.UtcNow.AddMinutes(Settings.DurationInMinutes),
 				SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey),
 					  					 SecurityAlgorithms.HmacSha256Signature)

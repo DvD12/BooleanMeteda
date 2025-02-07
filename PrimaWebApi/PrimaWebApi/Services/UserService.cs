@@ -57,5 +57,30 @@ namespace PrimaWebApi.Services
 			}
 			return null;
 		}
+
+		public async Task<IEnumerable<string>> GetUserRolesAsync(int userId)
+		{
+			var roles = new List<string>();
+
+			using (var connection = new SqlConnection(CONNECTION_STRING))
+			{
+				await connection.OpenAsync();
+
+				var command = new SqlCommand(
+				"SELECT r.Name " +
+				"FROM Roles r " +
+				"INNER JOIN UserRoles ur ON r.Id = ur.RoleId " +
+				"WHERE ur.UserId = @UserId", connection);
+				command.Parameters.AddWithValue("@UserId", userId);
+				var reader = await command.ExecuteReaderAsync();
+
+				while (await reader.ReadAsync())
+				{
+					roles.Add(reader.GetString(0));
+				}
+			}
+
+			return roles;
+		}
 	}
 }
