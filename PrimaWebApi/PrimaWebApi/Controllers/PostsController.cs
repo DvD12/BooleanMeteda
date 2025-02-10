@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PrimaWebApi.Data;
+using PrimaWebApi.Filters;
 using PrimaWebApi.Loggers;
 
 namespace PrimaWebApi.Controllers
@@ -19,13 +20,18 @@ namespace PrimaWebApi.Controllers
 			PostRepository = p; // dependency injection: "p" viene passata al costruttore dal nostro framework)
 			// _logger = new CustomFileLogger(); // Non è più responsabilità diretta di questa classe!
 			_logger = l;
-			Console.WriteLine(_logger.GetHashCode());
+			//Console.WriteLine(_logger.GetHashCode());
 		}
 
 		[HttpGet]
+		[LogActionFilter]
+		//[CustomAuthorization]
+		[CustomExceptionFilter]
+		[CustomResultFilter]
 		public async Task<IActionResult> Get(string? title)
 		{
-			_logger.WriteLog("Richiesta GET");
+			_logger.WriteLog("SONO APPENA ENTRATO NELL'API (richiesta GET)");
+			//throw new Exception("ECCEZIONE!!!1!11!!"); // solo per testare CustomExceptionFilter
 			try
 			{
 				if (title == null)

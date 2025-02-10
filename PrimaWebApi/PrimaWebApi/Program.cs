@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using PrimaWebApi.Code;
 using PrimaWebApi.Data;
 using PrimaWebApi.Loggers;
+using PrimaWebApi.Middlewares;
 using PrimaWebApi.Services;
 using System.Text;
 
@@ -22,7 +23,7 @@ namespace PrimaWebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<ICustomLogger, CustomFileLogger>();
+            builder.Services.AddSingleton<ICustomLogger, CustomConsoleLogger>();
             builder.Services.AddSingleton<PostRepository>();
             builder.Services.AddSingleton<CategoryRepository>();
 
@@ -52,8 +53,11 @@ namespace PrimaWebApi
 			Console.WriteLine(builder.Configuration["MioDato"]); // Configuration mi permette di accedere alle proprietà di appsettings.json tramite una struttura tipo dizionario
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+			app.UseMiddleware<LogMiddleware>();
+			app.UseMiddleware<LogMiddleware2>();
+
+			// Configure the HTTP request pipeline.
+			if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
