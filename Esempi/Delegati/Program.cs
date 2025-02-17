@@ -73,7 +73,67 @@
 			stampaCiao();
 			stampaNumero(1234);
 
-			
+
+
+			List<string> list = new List<string> { "ciao", "come", "stai" };
+			foreach (string item in list)
+			{
+				Console.WriteLine(item);
+			}
+			for (int i = 0; i < list.Count; i++)
+			{
+				Console.WriteLine(list[i]);
+			}
+			list.ForEach(x =>
+			{
+				Console.WriteLine(x);
+			}
+			);
+
+			// Definisco una funzione anonima
+			// Action rappresenta una funzione che non restituisce nulla (void)
+			Action stampa = () =>
+			{
+				Console.WriteLine("Ciao");
+			};
+			Action<int, int> stampaNumeri = (n1, n2) =>
+			{
+				Console.WriteLine(n1);
+				Console.WriteLine(n2);
+			};
+
+			// Func rappresenta una funzione che restituisce un valore
+			// In questo caso, non prende niente in input e restituisce 42 in output
+			Func<int> restituisci42 = () =>
+			{
+				return 42;
+			};
+			// Qui prende due int e restituisce una stringa
+			Func<int, int, string> sommaInStringa = (n1, n2) =>
+			{
+				return (n1 + n2).ToString();
+			};
+
+			stampa();
+			stampaNumero(2);
+			stampaNumeri(2, 3);
+
+			// Tra il chiamare il ForEach con una funzione anonima definita contestualmente come argomento
+			// e il chiamarla con una Action<string> definita precedentemente, c'è la stessa differenza che
+			// tra chiamare stampaNumero(2)
+			// e definire int n = 2
+			// e chiamare stampaNumero(n)
+			list.ForEach(x =>
+			{
+				Console.WriteLine(x);
+			}
+			);
+
+			Action<string> action = s =>
+			{
+				Console.WriteLine(s);
+			};
+			list.ForEach(action);
 		}
 
 		public static int Aggiungi(int n1, int n2) => n1 + n2;

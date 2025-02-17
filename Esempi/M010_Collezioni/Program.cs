@@ -6,7 +6,7 @@
 		{
 			HashSet<string> strings = new HashSet<string>();
 			strings.Add("1"); // Internamente, una funzione di hash traduce il valore "1" in un numero che rappresenta internamente la sua posizione (quindi la ricerca è efficiente)
-			
+
 			Dictionary<string, int> stringheANumeri = new Dictionary<string, int>();
 			stringheANumeri.Add("UNO!!!1!11", 1);
 			stringheANumeri.Add("Uno, di nuovo", 1); // è come una funzione: posso associare più chiavi allo stesso valore
@@ -15,7 +15,7 @@
 
 			stringheANumeri["Uno, di nuovo"] = 5; // Posso aggiungere/sovrascrivere il valore associato a una chiave
 			stringheANumeri["Numero totalmente nuovo"] = 666; // Posso aggiungere nuove chiavi così
-			
+
 			foreach (var coppia in stringheANumeri) // "coppia" è KeyValuePair<K,V>: un tipo di dato che rappresenta una coppia di una chiave e il suo corrispondente valore
 			{
 				Console.WriteLine(coppia.Key + " -> " + coppia.Value);
@@ -63,6 +63,10 @@
 			{
 				stringheANumeri.Add("QUATTRO", 4);
 			}
+
+			List<int> numeri = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+			numeri.Select(n => n * 5);
+			numeri.Select(n => n.ToString());
 		}
 	}
 }

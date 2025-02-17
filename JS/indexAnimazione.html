@@ -1,0 +1,97 @@
+<style>
+#Step1ProgressBar
+{
+	transition: width 1s;
+}
+#Step1ProgressBarBackground
+{
+	transition-delay: 2s;
+}
+</style>
+
+<h1>STEP 1</h1>
+<div id="Step1ProgressBarBackground" style="height: 30px; width: 100vw; background-color: #ff000066">
+	<div id="Step1ProgressBar" style="height: 30px; width: 100%; background-color: red;"></div>
+</div>
+
+
+<h1>STEP 2</h1>
+<div id="Step2ProgressBar" style="height: 30px; width: 0; background-color: green;"></div>
+
+<h1>STEP 3</h1>
+<div id="Step3ProgressBar" style="height: 30px; width: 0; background-color: blue;"></div>
+
+<script>
+	function StepDoProgress(stepNumber) // chiamerò questa funzione con 1, 2 o 3
+	{
+		var stepProgress = 100;
+		var interval = setInterval(function ()
+		{
+			stepProgress -= 10;
+			var progressBar = document.getElementById('Step' + stepNumber + 'ProgressBar');
+			progressBar.style.width = stepProgress + '%';
+			
+			// Limitiamo progress a 100
+			if (stepProgress <= 0)
+				stepProgress = 0;
+			
+			if (stepProgress <= 0)
+			{
+				var completionMessage = document.createElement('h3');
+				completionMessage.textContent = 'STEP ' + stepNumber + ' COMPLETATO';
+				progressBar.appendChild(completionMessage);
+				clearInterval(interval);
+				
+				return 'Step ' + stepNumber + ' COMPLETATO';
+			}
+			
+		}, 1000);
+	}
+	
+	function Go()
+	{
+		console.log(StepDoProgress(1));
+		console.log(StepDoProgress(2));
+		console.log(StepDoProgress(3));
+	}
+	//Go();
+	
+	function StepDoProgressPromise(stepNumber)
+	{
+		return new Promise(resolve =>
+		{
+			var stepProgress = 100;
+			var interval = setInterval(function ()
+			{
+				stepProgress -= 10;
+				var progressBar = document.getElementById('Step' + stepNumber + 'ProgressBar');
+				var progressBarBackground = document.getElementById('Step' + stepNumber + 'ProgressBarBackground');
+				progressBar.style.width = stepProgress + '%';
+				progressBarBackground.style.width = stepProgress + 'vw';
+				
+				// Limitiamo progress a 100
+				if (stepProgress <= 0)
+					stepProgress = 0;
+				
+				if (stepProgress <= 0)
+				{
+					var completionMessage = document.createElement('h3');
+					completionMessage.textContent = 'STEP ' + stepNumber + ' COMPLETATO';
+					progressBar.appendChild(completionMessage);
+					clearInterval(interval);
+					
+					resolve('Step ' + stepNumber + ' COMPLETATO');
+				}
+				
+			}, 1000);
+		})
+	}
+	
+	async function GoPromise()
+	{
+		console.log(await StepDoProgressPromise(1));
+		console.log(StepDoProgressPromise(2));
+		console.log(StepDoProgressPromise(3));
+	}
+	GoPromise();
+</script>

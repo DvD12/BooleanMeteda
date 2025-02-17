@@ -22,5 +22,20 @@
 			StampaNumero(100);
 			StampaNumero(42);
 		}
+
+		public void StampaNumero(int num)
+		{
+			Console.WriteLine(num);
+		}
+
+		public int Restituisci42()
+		{
+			return 42;
+		}
+
+		public string SommaInStringa(int n1, int n2)
+		{
+			return (n1 + n2).ToString();
+		}
 	}
 }
