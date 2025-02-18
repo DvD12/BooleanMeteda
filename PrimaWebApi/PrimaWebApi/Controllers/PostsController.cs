@@ -24,10 +24,10 @@ namespace PrimaWebApi.Controllers
 		}
 
 		[HttpGet]
-		[LogActionFilter]
+		//[LogActionFilter]
 		//[CustomAuthorization]
-		[CustomExceptionFilter]
-		[CustomResultFilter]
+		//[CustomExceptionFilter]
+		//[CustomResultFilter]
 		public async Task<IActionResult> Get(string? title)
 		{
 			_logger.WriteLog("SONO APPENA ENTRATO NELL'API (richiesta GET)");
@@ -121,7 +121,7 @@ namespace PrimaWebApi.Controllers
 		}
 
 		[HttpDelete("{id}")]
-		[Authorize(Roles = "Admin")]
+		//[Authorize(Roles = "Admin")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			try

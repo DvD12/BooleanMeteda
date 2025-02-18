@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="./common.js"></script>
+	</head>
+	<body>
+		<div style="display: flex; flex-direction: column; align-items: center;">
+			<h2>Login/Registra</h2>
+			<div style="display: flex; justify-content: space-between">
+				<p>E-mail</p>
+				<input id="EmailInput"></input>
+			</div>
+			<div style="display: flex; justify-content: space-between">
+				<p>Pass</p>
+				<input id="PasswordInput"></input>
+			</div>
+			<div style="display: flex; justify-content: space-between">
+				<button id="LoginBtn">LOG IN</button>
+				<button id="RegisterBtn">REGISTER</button>
+			</div>
+			<a href="./index.html">Home</a>
+		</div>
+		
+		<script>
+			$(document).ready(() =>
+			{
+				$('#LoginBtn').on("click", async () => // async perché contiene await
+				{
+					try
+					{
+						const response = await axios.post(
+						'https://localhost:7190/Account/Login', // primo argomento: il path
+						// secondo argomento: il body, che è un oggetto JS
+						{
+							email: $('#EmailInput').val(),
+							password: $('#PasswordInput').val(),
+						}
+						); 
+						console.log(response);
+						// Con sessionStorage memorizzo nel browser qualunque dato arbitrario come coppie chiave-valore
+						sessionStorage.setItem('jwt', response.data.token);
+						sessionStorage.setItem('expirationUtc', response.data.expirationUtc);
+						sessionStorage.setItem('user', $('#EmailInput').val());
+						alert('Login effettuato');
+						// Ora che ho effettuato il login, voglio che il browser ritorni alla pagina home
+						window.location.replace('./index.html'); // "replace" mi reindirizza alla pagina index a prescindere dall'host (localhost, miosito.com...)
+						// è meglio usare i percorsi RELATIVI ('./') quando sappiamo di dover lavorare con risorse "interne" al nostro dominio perché sappiamo che hanno sempre lo stesso percorso base (https://localhost/, https://miosito.com/...).
+						// I percorsi ASSOLUTI (quelli che hanno il percorso completo https://...) servono nel caso io debba riferirmi a una risorsa esterna (per es. un'<a> che punti ad https://google.com)
+					}
+					catch (err)
+					{
+						alert('Errore login ' + err);
+						console.log('Errore ' + err);
+					}
+				});
+				$('#RegisterBtn').on("click", async () => // async perché contiene await
+				{
+					try
+					{
+						const response = await axios.post(
+						'https://localhost:7190/Account/Register', // primo argomento: il path
+						// secondo argomento: il body, che è un oggetto JS
+						{
+							email: $('#EmailInput').val(),
+							password: $('#PasswordInput').val(),
+						}
+						); 
+						alert('Registrazione effettuata con successo');
+						console.log(response);
+					}
+					catch (err)
+					{
+						alert('Errore registrazione');
+						console.log(err);
+					}
+				});
+			});
+		</script>
+	</body>
+</html>

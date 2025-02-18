@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script
+		  src="https://code.jquery.com/jquery-3.7.1.min.js"
+		  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+		  crossorigin="anonymous"></script>
+	  <style>
+		.interactable
+		{
+			color: white;
+			background-color: black;
+			cursor: pointer;
+		}
+	  </style>
+	</head>
+	<body>
+		<p class="interactable">
+			Se mi clicchi, scompaio
+		</p>
+		<p class="interactable">
+			Se mi clicchi, scompaio anch'io
+		</p>
+		<script>
+			$(document).ready(function ()
+			{
+				//alert($('.interactable').text()); // così leggo...
+				$('.interactable').text('Ora ho tutto un altro testo');
+				$('.interactable').attr('class', 'notInteractable');
+				$('.interactable').on('click', function()
+				{
+					$(this).hide();
+				});
+			});
+		</script>
+	</body>
+</html>

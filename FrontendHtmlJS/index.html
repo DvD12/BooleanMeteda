@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<script src="./common.js"></script>
+		<style>
+			.headerContainer
+			{
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			<div class="headerContainer">
+				<h1>BLOG WEB API</h1>
+			</div>
+			<div class="postsContainer">
+			</div>
+		</div>
+		
+		<script>
+			async function GetPosts()
+			{
+				try
+				{
+					const response = await axios.get('https://localhost:7190/Posts');
+					console.log(response);
+					response.data.forEach(post =>
+					{
+						HandlePost(post);
+					});
+				}
+				catch (err)
+				{
+					console.log(err);
+				}
+			}
+			
+			function HandlePost(p)
+			{
+				// Manipoliamo il DOM per inserire le informazioni del post passato come parametro
+				let postHtml = `<div id='Post_${p.id}'>`; // Apro il div contenitore generale del post...
+				
+				postHtml += `<h3>${p.title}</h3>
+								<p>${p.content}</p>`;
+				if (p.tags.length > 0)
+				{
+					postHtml += `<div style='display: flex; gap: 5px; flex-wrap: wrap;'>`;
+					p.tags.forEach(tag =>
+					{
+						postHtml += `<p>${tag.name}</p>`
+					});
+					postHtml += `</div>`;
+				}
+				if (p.category != null)
+				{
+					postHtml += `<div>Categoria: ${p.category.name}</div>`;
+				}
+				
+				if (IsLogged())
+				{
+					postHtml += `<button id='DeleteBtn_${p.id}'>CANCELLA</button>`;
+				}
+				
+				postHtml += `</div>`; // ... chiudo il div contenitore generale del post
+				
+				$('.postsContainer').append(postHtml);
+				
+				$(`#DeleteBtn_${p.id}`).on('click', async function ()
+				{
+					await DeletePost(p.id);
+				});
+			}
+			
+			$(document).ready(() =>
+			{
+				GetPosts();
+				DisplayUser();
+			});
+		</script>
+	</body>
+</html>

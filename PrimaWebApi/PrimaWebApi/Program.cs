@@ -27,6 +27,17 @@ namespace PrimaWebApi
             builder.Services.AddSingleton<PostRepository>();
             builder.Services.AddSingleton<CategoryRepository>();
 
+			builder.Services.AddCors(options =>
+			{
+				options.AddPolicy("DefaultCORS", builder =>
+				{
+					// Aperto a tutto!
+					builder.AllowAnyOrigin()
+						   .AllowAnyMethod()
+						   .AllowAnyHeader();
+				});
+			});
+
 			builder.Services.AddAuthentication(x =>
 			{
 				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -66,9 +77,9 @@ namespace PrimaWebApi
             app.UseHttpsRedirection();
 			app.UseAuthentication(); // Serve a JWT
 			app.UseAuthorization();
+			app.UseCors("DefaultCORS");
 
-
-            app.MapControllers();
+			app.MapControllers();
 
             app.Run();
         }
