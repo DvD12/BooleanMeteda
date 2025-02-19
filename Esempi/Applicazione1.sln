@@ -39,6 +39,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serializzazione", "Serializ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M017_AsyncAwait", "M017_AsyncAwait\M017_AsyncAwait.csproj", "{D86DFC7E-4875-4C6D-B108-99AC653FCA8A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M32_ProgettoDaTestare", "M32_ProgettoDaTestare\M32_ProgettoDaTestare.csproj", "{22206AF0-BD6F-4306-A26E-33FD4E2815D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "M32_Test", "M32_Test\M32_Test.csproj", "{D2BDEFDA-67A7-4CC4-94AB-24000CC38D5F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,8 +121,19 @@ Global
 		{D86DFC7E-4875-4C6D-B108-99AC653FCA8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D86DFC7E-4875-4C6D-B108-99AC653FCA8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D86DFC7E-4875-4C6D-B108-99AC653FCA8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22206AF0-BD6F-4306-A26E-33FD4E2815D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22206AF0-BD6F-4306-A26E-33FD4E2815D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22206AF0-BD6F-4306-A26E-33FD4E2815D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22206AF0-BD6F-4306-A26E-33FD4E2815D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2BDEFDA-67A7-4CC4-94AB-24000CC38D5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2BDEFDA-67A7-4CC4-94AB-24000CC38D5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2BDEFDA-67A7-4CC4-94AB-24000CC38D5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2BDEFDA-67A7-4CC4-94AB-24000CC38D5F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CE2269C-E307-4BB3-8BD1-CE3D8C5994FB}
 	EndGlobalSection
 EndGlobal
