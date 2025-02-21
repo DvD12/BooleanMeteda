@@ -23,11 +23,11 @@ public partial class MainWindow : Window
 
 	private void OnLoginBtnClick(object sender, RoutedEventArgs e)
 	{
-		this.MainFrame.NavigationService.Navigate(new Uri("LoginPage.xaml", UriKind.Relative));
+		this.MainFrame.NavigationService.Navigate(new Uri("Views/LoginPage.xaml", UriKind.Relative));
 	}
 
 	private void OnUserBtnClick(object sender, RoutedEventArgs e)
 	{
-		this.MainFrame.NavigationService.Navigate(new Uri("UserPage.xaml", UriKind.Relative));
+		this.MainFrame.NavigationService.Navigate(new Uri("Views/UserPage.xaml", UriKind.Relative));
 	}
 }

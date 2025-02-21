@@ -16,18 +16,18 @@ using System.Windows.Shapes;
 namespace BlogWPF
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for UserPage.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class UserPage : Page
     {
-        public LoginPage()
+        public UserPage()
         {
             InitializeComponent();
-        }
+		}
 
-		private void OnLoginBtnClick(object sender, RoutedEventArgs e)
+		private void OnBackBtn(object sender, RoutedEventArgs e)
 		{
-            this.NavigationService.Navigate(new Uri("UserPage.xaml", UriKind.Relative));
+			this.NavigationService.Navigate(new Uri("Views/LoginPage.xaml", UriKind.Relative));
 		}
 	}
 }
