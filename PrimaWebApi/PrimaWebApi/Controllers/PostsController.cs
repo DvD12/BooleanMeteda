@@ -78,7 +78,7 @@ namespace PrimaWebApi.Controllers
 		/// Metodo per creare un nuovo post.
 		/// </summary>
 		/// <param name="newPost">Il nuovo post da creare</param>
-		/// <returns>IActionResult avente al suo interno il numero di righe DB coinvolte</returns>
+		/// <returns>IActionResult avente al suo interno l'ID del post creato</returns>
 		[HttpPost]
 		[Authorize]
 		public async Task<IActionResult> Create([FromBody] Post newPost)
@@ -89,8 +89,8 @@ namespace PrimaWebApi.Controllers
 				{
 					return BadRequest($"Dati non validi: {ModelState.Values}");
 				}
-				int affectedRows = await PostRepository.CreatePost(newPost);
-				return Ok(affectedRows);
+				int newPostId = await PostRepository.CreatePost(newPost);
+				return Ok(newPostId);
 			}
 			catch (Exception e)
 			{

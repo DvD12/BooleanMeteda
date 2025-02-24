@@ -19,6 +19,12 @@
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Title}" FontWeight="Bold" Margin="5"/> <!-- Questi Binding fanno riferimento al contesto in cui vivono, che è un elemento X di ItemsSource -->
                         <TextBox Text="{Binding Content}" Margin="5"/>
+                        <Button Command="{Binding DataContext.SavePostCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                CommandParameter="{Binding}"> <!-- Binding fa riferimento al suo contesto, che è un elemento di ItemsSource (cioè un post di Posts) -->
+                            Salva post
+                        </Button>
+                        <Button Command="{Binding DataContext.DeletePostCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                CommandParameter="{Binding}">Rimuovi post</Button>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

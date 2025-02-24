@@ -127,6 +127,11 @@ namespace PrimaWebApi.Data
 			return posts;
 		}
 
+		/// <summary>
+		/// Crea un post e restituisci l'ID del post appena inserito
+		/// </summary>
+		/// <param name="p"></param>
+		/// <returns></returns>
 		public async Task<int> CreatePost(Post p)
 		{
 			string query = @"INSERT INTO Posts (Title, Content, Author, CategoryId) VALUES (@Title, @Content, @Author, @CategoryId);

@@ -11,8 +11,5 @@ namespace BlogWPF.Models
 		public int Id { get; set; }
 		public string Title { get; set; }
 		public string Content { get; set; }
-
-
-		public static List<Post> Posts; // lista di dati che supponiamo verrà "da qualche parte" (API? Database?)
 	}
 }

@@ -20,10 +20,10 @@
         </Grid.ColumnDefinitions>
 
         <Label Margin="5" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right">E-mail</Label>
-        <TextBox Margin="5" Grid.Row="0" Grid.Column="1" />
+        <TextBox Name="EmailTxt" Margin="5" Grid.Row="0" Grid.Column="1" />
         <Label Margin="5" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right">Password</Label>
-        <TextBox Margin="5" Grid.Row="1" Grid.Column="1" />
+        <TextBox Name="PasswordTxt" Margin="5" Grid.Row="1" Grid.Column="1" />
         <Button Name="LoginBtn" Margin="5" Grid.Row="2" Grid.Column="0" Click="OnLoginBtnClick">Login</Button>
-        <Button Margin="5" Grid.Row="2" Grid.Column="1">Registra</Button>
+        <Button Margin="5" Grid.Row="2" Grid.Column="1" Click="OnRegisterBtnClick">Registra</Button>
     </Grid>
 </Page>
