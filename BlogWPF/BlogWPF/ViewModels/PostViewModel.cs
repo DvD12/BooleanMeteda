@@ -40,6 +40,8 @@ namespace BlogWPF.ViewModels
 		// Comando per cancellare un post
 		public ICommand DeletePostCommand { get; set; }
 
+		public bool IsAdmin { get; set; }
+
 		private Jwt _token;
 		/*
 		// Queste, Title e Content, sono le proprietà che le views possono leggere e scrivere, alle quali si collegano tramite data binding
@@ -142,6 +144,7 @@ namespace BlogWPF.ViewModels
 				return;
 			}
 			this._token = tokenApiResult.Data;
+			this.IsAdmin = this._token.Roles.Any(x => x == "Admin");
 
 			// Richiedo i post
 			var postsApiResult = await ApiService.GetPosts();

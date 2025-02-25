@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BlogWPF.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace BlogWPF
         public UserPage()
         {
             InitializeComponent();
+            //bool isAdmin = false;
+            //this.BackBtn.Visibility = isAdmin ? Visibility.Visible : Visibility.Hidden; // Come tramutiamo in XAML?
 		}
 
 		private void OnBackBtn(object sender, RoutedEventArgs e)

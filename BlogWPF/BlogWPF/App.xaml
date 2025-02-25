@@ -1,9 +1,24 @@
 ﻿<Application x:Class="BlogWPF.App"
+             xmlns:cv="clr-namespace:BlogWPF.Converters"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:BlogWPF"
-             StartupUri="Views/MainWindow.xaml">
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             StartupUri="Views/MainWindow.xaml"> <!-- Ho importato il namespace BlogWPF.Converters (un po' come uno using in C#) e lo chiamo, in questo contesto, "cv" -->
     <Application.Resources>
-         
+         <cv:BooleanToVisibilityConverter x:Key="B2VConverter" /> <!-- Definisco un'istanza di BooleanToVisibilityConverter e la chiamo "B2VConverter" -->
+        <System:Double x:Key="FontSizeNormal">16</System:Double> <!-- Sto definendo una variabile di tipo double, chiamata FontSizeNormal, con valore 16 -->
+        <FontFamily x:Key="FunnyFont">Comic Sans MS</FontFamily>
+
+        <!-- Definisco uno stile che si applica a tutte le label. Come se scrivessi p { font-size: ... } in CSS -->
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource FontSizeNormal}"/>
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+
+        <!-- Definisco uno stile usato solo dagli elementi che si riferiscono alla sua chiave -->
+        <Style x:Key="FunnyLabel" TargetType="Label">
+            <Setter Property="FontFamily" Value="Times New Roman" />
+        </Style>
     </Application.Resources>
 </Application>

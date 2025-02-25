@@ -8,32 +8,67 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="UserPage">
+    
+    <!-- Per capire meglio il meccanismo dei contesti nel binding MVVM, potrebbe essere utile immaginare questo XAML
+         come del codice C# 
+         La ListBox, infatti, è come una sorta di foreach -->
+    <!-- foreach (Post p in MioPostViewModel.Posts) // ciò significha che il mio "contesto" è "p"
+    {
+      fai uno stackpanel...
+      fai una label... dove text = p.Title
+      fai un button dove Visibility = MioPostViewModel.IsAdmin // IsAdmin non è una proprietà del mio contesto, devo fare un binding al mio ViewModel
+    }-->
+    <!-- MioPostViewModel.IsAdmin -->
 
     <Page.DataContext> <!-- Qui definisco il riferimento al mio view model -->
         <vm:PostViewModel />
     </Page.DataContext>
-    <StackPanel>
-        <ListBox ItemsSource="{Binding Posts}"> <!-- Dal viewmodel -->
-            <ListBox.ItemTemplate>
-                <DataTemplate> <!-- Specifico la struttura UI del generico elemento X della sua ItemsSource (qui Posts del ViewModel) -->
-                    <StackPanel Orientation="Horizontal">
-                        <Label Content="{Binding Title}" FontWeight="Bold" Margin="5"/> <!-- Questi Binding fanno riferimento al contesto in cui vivono, che è un elemento X di ItemsSource -->
-                        <TextBox Text="{Binding Content}" Margin="5"/>
-                        <Button Command="{Binding DataContext.SavePostCommand, RelativeSource={RelativeSource AncestorType=Page}}"
-                                CommandParameter="{Binding}"> <!-- Binding fa riferimento al suo contesto, che è un elemento di ItemsSource (cioè un post di Posts) -->
-                            Salva post
-                        </Button>
-                        <Button Command="{Binding DataContext.DeletePostCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <ScrollViewer Grid.Row="0">
+
+            <ListBox ItemsSource="{Binding Posts}" Background="Gray" HorizontalContentAlignment="Stretch">
+                <!-- Dal viewmodel -->
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Specifico la struttura UI del generico elemento X della sua ItemsSource (qui Posts del ViewModel) -->
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20*" />
+                                <ColumnDefinition Width="80*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Style="{StaticResource FunnyLabel}" Grid.Column="0" FontSize="{StaticResource FontSizeNormal}" Content="{Binding Title}" FontWeight="Bold" Margin="5"/>
+                            <!-- Questi Binding fanno riferimento al contesto in cui vivono, che è un elemento X di ItemsSource -->
+                            <TextBox Grid.Column="1" Text="{Binding Content}" Margin="5"/>
+                            <Button Grid.Column="2" Command="{Binding DataContext.SavePostCommand, RelativeSource={RelativeSource AncestorType=Page}}"
+                                CommandParameter="{Binding}">
+                                <!-- Binding fa riferimento al suo contesto, che è un elemento di ItemsSource (cioè un post di Posts) -->
+                                Salva post
+                            </Button>
+                            <Button  Grid.Column="3" Visibility="{Binding DataContext.IsAdmin, RelativeSource={RelativeSource AncestorType=Page}, Converter={StaticResource B2VConverter}}"
+                                Command="{Binding DataContext.DeletePostCommand, RelativeSource={RelativeSource AncestorType=Page}}"
                                 CommandParameter="{Binding}">Rimuovi post</Button>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Button Command="{Binding AddPostCommand}">Crea post</Button>
-        <Button Click="OnBackBtn">INDIETRO</Button>
-        <!-- <TextBox Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="10"/> --> <!-- Restiamo in ascolto di PropertyChanged: quando viene sollevato l'evento PropertyChanged, aggiornati -->
-        <!-- <TextBox Text="{Binding Content, UpdateSourceTrigger=PropertyChanged}" Width="200" Margin="10"/> -->
-        <!-- <Label Content="{Binding Title, UpdateSourceTrigger=PropertyChanged}" ContentStringFormat="Il titolo è {0}"></Label> -->
-        <!-- <Button Click="OnBackBtn">INDIETRO</Button> -->
-    </StackPanel>
+                            <!-- Per fare riferimento a elementi definiti tra le Resource di app.xaml, devo utilizzare la sintassi {StaticResource <chiave_risorsa>}-->
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </ScrollViewer>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Command="{Binding AddPostCommand}">Crea post</Button>
+            <Button Click="OnBackBtn">INDIETRO</Button>
+        </StackPanel>
+    </Grid>
 </Page>

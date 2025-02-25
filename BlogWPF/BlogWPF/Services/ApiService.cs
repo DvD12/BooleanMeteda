@@ -9,9 +9,15 @@ using BlogWPF.Models;
 using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http.Headers;
+using System.Security.Claims;
 
 namespace BlogWPF.Services
 {
+	public enum ApiServiceResultType
+	{
+		Success,
+		Error
+	}
 	public static class ApiService
 	{
 		public const string API_URL = "https://localhost:7190";
@@ -65,12 +71,19 @@ namespace BlogWPF.Services
 				var jwtToken = handler.ReadJwtToken(jwt.Token);
 
 				// Vediamo se ci sono ruoli nel JWT
-				var roles = jwtToken.Claims.Where(c => c.Type == "role").Select(c => c.Value).ToList();
+				var roles = jwtToken.Claims
+					.Where((Claim c) => c.Type == "role")
+					.Select(c => c.Value).ToList();
 
 				// Aggiungiamoli nel nostro DTO (data transfer object) rappresentante il JWT
 				jwt.Roles = roles;
 			}
 			catch { } // Se succede qualcosa non facciamo nulla
+		}
+
+		public static bool MiaFunzione(int x)
+		{
+			return x > 5;
 		}
 
 		public static async Task<ApiServiceResult<List<Post>>> GetPosts()
